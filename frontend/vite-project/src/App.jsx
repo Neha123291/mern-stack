@@ -5,6 +5,9 @@ import Contact from "./pages/Contact/Contact";
 import Products from "./pages/Products/Products";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { ToastContainer } from "react-bootstrap";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <>
@@ -15,6 +18,7 @@ function App() {
           <Route path="/products" element={<Products />} />
         </Routes>
       </Router>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }
