@@ -1,16 +1,17 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Product from '../models/Product.js';
+import { protect } from '../middleware/auth.middleware.js';
 const router = express.Router();
 
 // GET /api/products
-router.get('/', async (req, res) => {
+router.get('/', protect, async (req, res) => {
   const products = await Product.find();
   res.json({ success: true, message: 'Products fetched successfully', products });
 });
 
 // GET /api/products/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', protect, async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ success: false, message: 'Invalid product Id' });
@@ -27,7 +28,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/products
-router.post('/', async (req, res) => {
+router.post('/', protect, async (req, res) => {
   try {
     const { title, image, description, price } = req.body;
     const product = new Product({ title, image, description, price });
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT /api/products/:id
-router.put('/:id', async (req, res) => {
+router.put('/:id', protect, async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ success: false, message: 'Invalid product Id' });
